@@ -8,12 +8,12 @@ namespace TetHolidayAPI;
 public class TetHolidayController : ControllerBase
 {
     private readonly TetHolidayDbContext _context;
-    private readonly IWebHostEnvironment _env;
+    private IConfiguration _config;
 
-    public TetHolidayController(TetHolidayDbContext context, IWebHostEnvironment env)
+    public TetHolidayController(TetHolidayDbContext context, IConfiguration config)
     {
         _context = context;
-        _env = env;
+        _config = config;
     }
 
     [HttpPost]
@@ -51,7 +51,7 @@ public class TetHolidayController : ControllerBase
             return BadRequest("File size exceeds 20MB limit.");
         }
 
-        var uploadsFolder = Path.Combine(_env.ContentRootPath, "uploads");
+        var uploadsFolder = Path.Combine(_config.GetValue<string>("FilePath")!, "uploads");
         if (!Directory.Exists(uploadsFolder))
         {
             Directory.CreateDirectory(uploadsFolder);
