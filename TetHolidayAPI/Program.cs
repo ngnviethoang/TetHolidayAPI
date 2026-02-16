@@ -14,6 +14,7 @@ await using var scope = app.Services.CreateAsyncScope();
 var db = scope.ServiceProvider.GetRequiredService<TetHolidayDbContext>();
 await db.Database.MigrateAsync();
 
+app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
